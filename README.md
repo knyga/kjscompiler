@@ -1,6 +1,13 @@
 ##Kjscompiler
 Makes compilation of multiple JavaScript files with *Google Closure Compiler* application in right order.
 
+###Illustration
+Goal is to convert layout at input:
+[from]: https://github.com/knyga/kjscompiler/blob/master/examples/external/diagramFrom.jpg "From"
+In to minifed layout:
+[to]: https://github.com/knyga/kjscompiler/blob/master/examples/external/diagramTo.jpg "To"
+With respect to internal and external dependencies.
+
 ###Requirements
 Requires Java Runtime Environment version 7.
 
