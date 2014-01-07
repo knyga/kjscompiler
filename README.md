@@ -1,5 +1,5 @@
 ##Kjscompiler
-Makes compilation of multiple JavaScript files with *Google Closure Compiler* application in right order. Easy configuration.
+Makes compilation of multiple JavaScript files with *Google Closure Compiler* application in right order.
 
 ###Requirements
 Requires Java Runtime Environment version 7.
