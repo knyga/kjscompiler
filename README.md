@@ -1,6 +1,16 @@
 ##Kjscompiler
 Makes compilation of multiple JavaScript files with *Google Closure Compiler* application in right order.
 
+Goal is to convert layout at input:
+
+![from](https://raw.github.com/knyga/kjscompiler/master/examples/external/diagramFrom.jpg "From")
+
+In to minifed layout:
+
+![to](https://raw.github.com/knyga/kjscompiler/master/examples/external/diagramTo.jpg "To")
+
+With respect to internal and external dependencies.
+
 ###Requirements
 Requires Java Runtime Environment version 7.
 
@@ -25,7 +35,7 @@ Kjscompiler can use information about JavaScript file to build right compiling c
 | ------------- |-------------| -----|
 | @depends     | @depends {somescript.js} | Specifies dependency on other file. |
 | @ignore | @ignore      |    File with this mark will be ignored. |
-| @external      | @external     |   File with this mark will be considered as external. It will not be compiled, but it will give no unknown variable error during the compilation |
+| @external      | @external     |   File with this mark will be considered as external. It will not be compiled, but it will give no unknown variable error during the compilation. |
 
 ```javascript
 /**
