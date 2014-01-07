@@ -3,11 +3,11 @@ Makes compilation of multiple JavaScript files with *Google Closure Compiler* ap
 
 ###Illustration
 Goal is to convert layout at input:
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
-[from]: https://github.com/knyga/kjscompiler/blob/master/examples/external/diagramFrom.jpg "From"
+
+![from](https://github.com/knyga/kjscompiler/blob/master/examples/external/diagramFrom.jpg "From")
 In to minifed layout:
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
-[to]: https://github.com/knyga/kjscompiler/blob/master/examples/external/diagramTo.jpg "To"
+
+![to](https://github.com/knyga/kjscompiler/blob/master/examples/external/diagramTo.jpg "To")
 With respect to internal and external dependencies.
 
 ###Requirements
