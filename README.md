@@ -64,6 +64,7 @@ To debug add `--debug true` in call line.
 
 ###Licence
 kjscompiler
+
 Copyright (C) 2014  Oleksandr Knyga, oleksandrknyga@gmail.com
 
 This program is free software: you can redistribute it and/or modify
