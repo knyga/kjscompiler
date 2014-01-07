@@ -1,0 +1,6 @@
+{
+	"basedir": "js",
+	"output": "js.min/all.js",
+	"level": "SIMPLE_OPTIMIZATIONS",
+	"pattern": "*.js"
+}

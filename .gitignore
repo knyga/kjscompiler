@@ -1,0 +1,4 @@
+manifest.mf
+nbproject/*
+dist/*
+build/*
