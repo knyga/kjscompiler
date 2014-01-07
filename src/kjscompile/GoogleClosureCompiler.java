@@ -209,7 +209,11 @@ public class GoogleClosureCompiler {
             String path) throws IOException {
         
         File f = new File(path);
-        f.getParentFile().mkdirs();
+        File parent = f.getParentFile();
+        
+        if(null != parent) {
+            parent.mkdirs();
+        }
         
         FileWriter outputFile;
         outputFile = new FileWriter(path);
