@@ -28,6 +28,16 @@ Instead of kjscompile.json you can specify your own path to configuration file w
 
 `level` - level of optimization (WHITESPACE_ONLY, SIMPLE_OPTIMIZATIONS, ADVANCED_OPTIMIZATIONS).
 
+Example:
+```javascript
+{
+	"basedir": "js",
+	"output": "js.min/all.js",
+	"level": "SIMPLE_OPTIMIZATIONS",
+	"pattern": "*.js"
+}
+```
+
 ###Annotating JavaScript files
 Kjscompiler can use information about JavaScript file to build right compiling chain.
 
