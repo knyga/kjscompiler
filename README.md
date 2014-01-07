@@ -36,7 +36,7 @@ Kjscompiler can use information about JavaScript file to build right compiling c
 | ------------- |-------------| -----|
 | @depends     | @depends {somescript.js} | Specifies dependency on other file. |
 | @ignore | @ignore      |    File with this mark will be ignored. |
-| @external      | @external     |   File with this mark will be considered as external. It will not be compiled, but it will give no unknown variable error during the compilation |
+| @external      | @external     |   File with this mark will be considered as external. It will not be compiled, but it will give no unknown variable error during the compilation. |
 
 ```javascript
 /**
