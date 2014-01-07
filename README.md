@@ -8,7 +8,7 @@ Requires Java Runtime Environment version 7.
 `java -jar kjscompile.jar`
 
 ###Kjscompile.json
-Instead of kjscompile.json you can specify your own path to configuration file with *--settings* attribute.
+Instead of kjscompile.json you can specify your own path to configuration file with `--settings %path%` attribute.
 
 `basedir` - directory with JavaScript files;
 
@@ -50,7 +50,7 @@ Kjscompiler can use information about JavaScript file to build right compiling c
 ```
 
 ###Debug
-To debug add *--debug true* in call line.
+To debug add `--debug true` in call line.
 
 ###Copyright
 Oleksandr Knyga, 2014
