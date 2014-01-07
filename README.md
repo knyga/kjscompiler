@@ -5,9 +5,11 @@ Makes compilation of multiple JavaScript files with *Google Closure Compiler* ap
 Goal is to convert layout at input:
 
 ![from](https://raw.github.com/knyga/kjscompiler/master/examples/external/diagramFrom.jpg "From")
+
 In to minifed layout:
 
 ![to](https://raw.github.com/knyga/kjscompiler/master/examples/external/diagramTo.jpg "To")
+
 With respect to internal and external dependencies.
 
 ###Requirements
