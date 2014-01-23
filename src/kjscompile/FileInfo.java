@@ -44,7 +44,11 @@ public class FileInfo implements Comparable<FileInfo>{
     
     public FileInfo(String filename) {
         
-        this.filename = filename;
+        try {
+			this.filename = new File(filename).getCanonicalPath();
+		} catch (IOException e) {
+			throw new RuntimeException("Unable to get canonical path for " + filename + ": " + e.getMessage());
+		}
         this.dependencies = new ArrayList<String>();
         
         File file = new File(filename);
@@ -62,7 +66,14 @@ public class FileInfo implements Comparable<FileInfo>{
                 mExternal = pExternal.matcher(data);
         
         while (mDependency.find()) {
-            this.dependencies.add(parentDirName + mDependency.group(1).replaceAll("/", "\\\\"));
+        	String dependency = parentDirName + mDependency.group(1).replaceAll("/", "\\\\");
+        	try {
+        		// Resolve relative paths
+        		dependency = new File(dependency).getCanonicalPath();
+        	} catch (IOException e) {
+        		throw new RuntimeException("Unable to get canonical path for dependency " + dependency + " in " + file.getAbsolutePath() + ": " + e.getMessage());
+        	}
+    		this.dependencies.add(dependency);        		            
         }
         
         if(mName.find()) {
