@@ -52,7 +52,7 @@ public class FileInfo implements Comparable<FileInfo>{
         this.dependencies = new ArrayList<String>();
         
         File file = new File(filename);
-        String parentDirName = file.getParent() + "\\";
+        String parentDirName = file.getParent() + "/";
         String data = this.readFile(file);
         
         Pattern pDependency = Pattern.compile("@depends\\s+\\{(.+)\\}"),
@@ -66,7 +66,7 @@ public class FileInfo implements Comparable<FileInfo>{
                 mExternal = pExternal.matcher(data);
         
         while (mDependency.find()) {
-        	String dependency = parentDirName + mDependency.group(1).replaceAll("/", "\\\\");
+        	String dependency = parentDirName + mDependency.group(1);
         	try {
         		// Resolve relative paths
         		dependency = new File(dependency).getCanonicalPath();
