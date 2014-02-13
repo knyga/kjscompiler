@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package kjscompile;
 
@@ -24,48 +24,34 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- *
+ * 
  * @author agnynk
  */
 public class FileScanner {
-    private static List<String> result;
-    
-    public static List<String> run(String rootPath, String search) {
-        result = new ArrayList<String>();
-        
-        String ptext = "^" +
-                (search.replace (".", "\\.")
-                        .replace("*", ".*")
-                ) +
-                "$";
-        
-        File[] domains = new File(rootPath).listFiles();
-        
-        for (File domain : domains) {
-            
-            if (domain.isDirectory()) {
-                File[] files = new File(domain.getAbsolutePath()).listFiles();
+	private static List<String> result;
 
-                for (File file : files) {
-                    ProcessFile(file, ptext);
-                }
-            } else {
-                ProcessFile(domain, ptext);
-            }
-        }
-        
-        return result;
-    }
-    
-    private static void ProcessFile(File file, String ptext) {
-        String absoultePath = file.getAbsolutePath();
-        if (file.isFile() &&
-                Pattern.matches(ptext, absoultePath)
-            ) {
-            result.add(absoultePath);
-        }
-    }
-    
-    
-    
+	public static List<String> run(String rootPath, String search) {
+		result = new ArrayList<String>();
+
+		String ptext = "^" + (search.replace(".", "\\.").replace("*", ".*"))
+				+ "$";
+
+		processFileRecursively(new File(rootPath), ptext);
+
+		return result;
+	}
+
+	private static void processFileRecursively(File file, String ptext) {
+		String absoultePath = file.getAbsolutePath();
+		if (file.isFile()) {
+			if (Pattern.matches(ptext, absoultePath))
+				result.add(absoultePath);
+		} else if (file.isDirectory()) {
+			File[] files = new File(absoultePath).listFiles();
+			for (File f : files) {
+				processFileRecursively(f, ptext);
+			}
+		}
+	}
+
 }
