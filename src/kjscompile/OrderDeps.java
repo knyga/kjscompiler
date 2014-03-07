@@ -37,6 +37,7 @@ public class OrderDeps {
     
     private HashSet<Integer> unId;
     
+    //To reduce consumed space
     private Hashtable<String, Integer> filesHash;
     
     private List<String> errors;
@@ -48,6 +49,7 @@ public class OrderDeps {
         this.orderedFiles = new ArrayList<FileInfo>();
         this.unId = new HashSet<Integer>();
         
+        //Sort files, with low number of dependencies goes first
         Collections.sort(this.files, new Comparator<FileInfo>(){
             public int compare(FileInfo f, FileInfo s) {
                 int fSize = f.getDependencies().size(),
@@ -65,10 +67,12 @@ public class OrderDeps {
             }
         });
         
+        //Initialize hash
         for(int i = 0, length = this.files.size(); i < length; i++) {
             this.filesHash.put(this.files.get(i).getFilename().toLowerCase(), i);
         }
         
+        //Create back links, to make children/parent adecvate
         for(int i = 0, ilength = this.files.size(); i < ilength; i++) {
             FileInfo fiCurrent = this.files.get(i);
             List<String> dependencies = fiCurrent.getDependencies();
@@ -114,14 +118,18 @@ public class OrderDeps {
         
         FileInfo fiCurrent = this.files.get(id);
         
+        //If viewed, go to the next file
         if(fiCurrent.getIsWatched()) {
             order(id+1);
             return;
         }
         
+        //If all parents viewed
         if(fiCurrent.getWatchedDeps() == fiCurrent.getDependencies().size()) {
+            //Add to the ordered set
             add(id);
         } else {
+            //Otherwise, take a look on the next file
             order(id+1);
         }
         
@@ -134,6 +142,7 @@ public class OrderDeps {
         
         FileInfo fiCurrent = this.files.get(id);
         
+        //If it is not in a ordered list уеt
         if(this.unId.add(id)) {
             this.orderedFiles.add(fiCurrent);
             //System.out.println(fiCurrent.getFilename());
