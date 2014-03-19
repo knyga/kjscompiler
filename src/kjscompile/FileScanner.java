@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package kjscompile;
+package kjscompiler;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -24,20 +24,16 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- * 
  * @author agnynk
  */
 public class FileScanner {
 	private static List<String> result;
 
-	public static List<String> run(String rootPath, String search) {
+	public static List<String> run(String rootPath, String search, String projectPath) {
 		result = new ArrayList<String>();
-
-		String ptext = "^" + (search.replace(".", "\\.").replace("*", ".*"))
-				+ "$";
-
-		processFileRecursively(new File(rootPath), ptext);
-
+		String ptext = "^" + (search.replace(".", "\\.").replace("*", ".*")) + "$";
+		
+		processFileRecursively(new File(projectPath, rootPath), ptext);
 		return result;
 	}
 
