@@ -20,13 +20,15 @@ Requires Java Runtime Environment version 7.
 ###Kjscompile.json
 Instead of kjscompile.json you can specify your own path to configuration file with `--settings %path%` attribute.
 
-`basedir` - directory with JavaScript files;
+`basedir` - directory or array of directories with JavaScript files;
 
 `output` - output JavaScript file name;
 
 `pattern` - rule for filename (*.js);
 
 `level` - level of optimization (WHITESPACE_ONLY, SIMPLE_OPTIMIZATIONS, ADVANCED_OPTIMIZATIONS).
+
+`wrapper` - setting to wrap your output. The place holder is "%output%".
 
 Example:
 ```javascript
@@ -37,6 +39,20 @@ Example:
 	"pattern": "*.js"
 }
 ```
+Example:
+```javascript
+{
+	"basedir": ["lib/javascript", "lib/ecmascript"],
+	"output": "js.min/all.js",
+	"level": "SIMPLE_OPTIMIZATIONS",
+	"pattern": "*.js",
+	"wrapper" : "(function(){ %output% }());"
+}
+```
+
+Note:
+Any path will be relative to the settings file. If none provided it will be relative to the current working directory ( the directory where you launched kjscompiler ).
+
 
 ###Annotating JavaScript files
 Kjscompiler can use information about JavaScript file to build right compiling chain.
@@ -64,7 +80,7 @@ Kjscompiler can use information about JavaScript file to build right compiling c
 
 ```javascript
 /**
- * kjscompilerannotation
+ * kjscompiler annotation
  * @external
  */
 ```
