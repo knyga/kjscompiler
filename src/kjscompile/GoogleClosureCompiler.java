@@ -14,9 +14,9 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
-package kjscompile;
+package kjscompiler;
 
 import com.google.javascript.jscomp.*;
 import java.io.File;
@@ -27,199 +27,220 @@ import java.util.List;
 import java.util.logging.Level;
 
 /**
- *
+ * 
  * @author agnynk
  */
 public class GoogleClosureCompiler {
-    private String compilationLevel;
-    private String output;
-    private List<String> externals;
-    private List<String> primaries;
-    
-    private Level loggingLevel = Level.OFF;
-    private WarningLevel warningLevel = WarningLevel.QUIET;
-    
-    private JSError[] warnings;
-    private JSError[] errors;
-    
-    private String compileNotes = "/** \n" +
-            "@ignore\n" +
-            "**/";
-            
+	private String compilationLevel;
+	private String output, wrapper;
+	private List<String> externals;
+	private List<String> primaries;
 
-    /**
-     * @return the compilationLevel
-     */
-    public String getCompilationLevel() {
-        return compilationLevel;
-    }
+	private Level loggingLevel = Level.OFF;
+	private WarningLevel warningLevel = WarningLevel.QUIET;
 
-    /**
-     * @param compilationLevel the compilationLevel to set
-     */
-    public void setCompilationLevel(String compilationLevel) {
-        this.compilationLevel = compilationLevel;
-    }
+	private JSError[] warnings;
+	private JSError[] errors;
 
-    /**
-     * @return the output
-     */
-    public String getOutput() {
-        return output;
-    }
+	private String compileNotes = "/** \n" + "* @ignore\n" + "**/",
+			oHolder = "%output%";
 
-    /**
-     * @param output the output to set
-     */
-    public void setOutput(String output) {
-        this.output = output;
-    }
+	/**
+	 * @return the compilationLevel
+	 */
+	public String getCompilationLevel() {
+		return compilationLevel;
+	}
 
-    /**
-     * @return the externals
-     */
-    public List<String> getExternals() {
-        return externals;
-    }
+	/**
+	 * @param compilationLevel
+	 *            the compilationLevel to set
+	 */
+	public void setCompilationLevel(String compilationLevel) {
+		this.compilationLevel = compilationLevel;
+	}
 
-    /**
-     * @param externals the externals to set
-     */
-    public void setExternals(List<String> externals) {
-        this.externals = externals;
-    }
+	/**
+	 * @return the output
+	 */
+	public String getOutput() {
+		return output;
+	}
 
-    /**
-     * @return the primaries
-     */
-    public List<String> getPrimaries() {
-        return primaries;
-    }
+	/**
+	 * @param output
+	 *            the output to set
+	 */
+	public void setOutput(String output) {
+		this.output = output;
+	}
 
-    /**
-     * @param primaries the primaries to set
-     */
-    public void setPrimaries(List<String> primaries) {
-        this.primaries = primaries;
-    }
+	/**
+	 * @return the output
+	 */
+	public String getWrapper() {
+		return wrapper;
+	}
 
-    /**
-     * @return the loggingLevel
-     */
-    public Level getLoggingLevel() {
-        return loggingLevel;
-    }
+	/**
+	 * @param output
+	 *            the output to set
+	 */
+	public void setWrapper(String wrapper) {
+		this.wrapper = wrapper;
+	}
 
-    /**
-     * @param loggingLevel the loggingLevel to set
-     */
-    public void setLoggingLevel(Level loggingLevel) {
-        this.loggingLevel = loggingLevel;
-    }
-    
-    /**
-     * @return the warningLevel
-     */
-    public WarningLevel getWarningLevel() {
-        return warningLevel;
-    }
+	/**
+	 * @return the externals
+	 */
+	public List<String> getExternals() {
+		return externals;
+	}
 
-    /**
-     * @param warningLevel the warningLevel to set
-     */
-    public void setWarningLevel(WarningLevel warningLevel) {
-        this.warningLevel = warningLevel;
-    }
+	/**
+	 * @param externals
+	 *            the externals to set
+	 */
+	public void setExternals(List<String> externals) {
+		this.externals = externals;
+	}
 
-    /**
-     * @return the warnings
-     */
-    public JSError[] getWarnings() {
-        return warnings;
-    }
+	/**
+	 * @return the primaries
+	 */
+	public List<String> getPrimaries() {
+		return primaries;
+	}
 
-    /**
-     * @return the errors
-     */
-    public JSError[] getErrors() {
-        return errors;
-    }
-    
-    public GoogleClosureCompiler(List<String> primaries, String output, 
-            String compilationLevel, List<String> externals) {
-        this.primaries = primaries;
-        this.output = output;
-        this.compilationLevel = compilationLevel;
-        this.externals = externals;
-    }
-    
-    public void run() throws IOException {
-        com.google.javascript.jscomp.Compiler.
-                setLoggingLevel(this.loggingLevel);
-        com.google.javascript.jscomp.Compiler compiler = 
-                new com.google.javascript.jscomp.Compiler();
-        
-        CompilerOptions options = new CompilerOptions();
-       
-        CompilationLevel compilationLevel =
-                CompilationLevel .SIMPLE_OPTIMIZATIONS;
-        
-        switch(this.compilationLevel.toUpperCase().trim()) {
-            case "WHITESPACE_ONLY":
-                compilationLevel = CompilationLevel.WHITESPACE_ONLY;
-                break;
-                
-            case "ADVANCED_OPTIMIZATIONS":
-                compilationLevel = CompilationLevel.ADVANCED_OPTIMIZATIONS;
-                break;
-                
-            default:
-            case "SIMPLE_OPTIMIZATIONS":
-                compilationLevel = CompilationLevel.SIMPLE_OPTIMIZATIONS;
-                break;
-        }
+	/**
+	 * @param primaries
+	 *            the primaries to set
+	 */
+	public void setPrimaries(List<String> primaries) {
+		this.primaries = primaries;
+	}
 
-        compilationLevel.setOptionsForCompilationLevel(options);
-        this.getWarningLevel().setOptionsForWarningLevel(options);
-        
-        List<JSSourceFile> externalJavascriptFiles = 
-                new ArrayList<JSSourceFile>();
-        for (String filename : this.externals)
-        {
-          externalJavascriptFiles.add(JSSourceFile.fromFile(filename));
-        }
+	/**
+	 * @return the loggingLevel
+	 */
+	public Level getLoggingLevel() {
+		return loggingLevel;
+	}
 
-        List<JSSourceFile> primaryJavascriptFiles = 
-                new ArrayList<JSSourceFile>();
-        for (String filename : this.primaries)
-        {
-            primaryJavascriptFiles.add(JSSourceFile.fromFile(filename));
-        }
+	/**
+	 * @param loggingLevel
+	 *            the loggingLevel to set
+	 */
+	public void setLoggingLevel(Level loggingLevel) {
+		this.loggingLevel = loggingLevel;
+	}
 
-        compiler.compile(externalJavascriptFiles, primaryJavascriptFiles,
-                options);
-        
-        this.warnings = compiler.getWarnings();
-        this.errors = compiler.getErrors();
-        
-        this.write(compiler, this.output);
-    }
-    
-    private void write(com.google.javascript.jscomp.Compiler compiler,
-            String path) throws IOException {
-        
-        File f = new File(path);
-        File parent = f.getParentFile();
-        
-        if(null != parent) {
-            parent.mkdirs();
-        }
-        
-        FileWriter outputFile;
-        outputFile = new FileWriter(path);
-        outputFile.write(compiler.toSource());
-        outputFile.write("\n");
-        outputFile.write(this.compileNotes);
-        outputFile.close();
-    }
+	/**
+	 * @return the warningLevel
+	 */
+	public WarningLevel getWarningLevel() {
+		return warningLevel;
+	}
+
+	/**
+	 * @param warningLevel
+	 *            the warningLevel to set
+	 */
+	public void setWarningLevel(WarningLevel warningLevel) {
+		this.warningLevel = warningLevel;
+	}
+
+	/**
+	 * @return the warnings
+	 */
+	public JSError[] getWarnings() {
+		return warnings;
+	}
+
+	/**
+	 * @return the errors
+	 */
+	public JSError[] getErrors() {
+		return errors;
+	}
+
+	public GoogleClosureCompiler(List<String> primaries, String output,
+			String compilationLevel, List<String> externals) {
+		this.primaries = primaries;
+		this.output = output;
+		this.compilationLevel = compilationLevel;
+		this.externals = externals;
+	}
+
+	public void run() throws IOException {
+		com.google.javascript.jscomp.Compiler
+				.setLoggingLevel(this.loggingLevel);
+		com.google.javascript.jscomp.Compiler compiler = new com.google.javascript.jscomp.Compiler();
+
+		CompilerOptions options = new CompilerOptions();
+
+		CompilationLevel compilationLevel = CompilationLevel.SIMPLE_OPTIMIZATIONS;
+
+		switch (this.compilationLevel.toUpperCase().trim()) {
+		case "WHITESPACE_ONLY":
+			compilationLevel = CompilationLevel.WHITESPACE_ONLY;
+			break;
+
+		case "ADVANCED_OPTIMIZATIONS":
+			compilationLevel = CompilationLevel.ADVANCED_OPTIMIZATIONS;
+			break;
+
+		default:
+		case "SIMPLE_OPTIMIZATIONS":
+			compilationLevel = CompilationLevel.SIMPLE_OPTIMIZATIONS;
+			break;
+		}
+
+		compilationLevel.setOptionsForCompilationLevel(options);
+		this.getWarningLevel().setOptionsForWarningLevel(options);
+
+		List<JSSourceFile> externalJavascriptFiles = new ArrayList<JSSourceFile>();
+		for (String filename : this.externals) {
+			externalJavascriptFiles.add(JSSourceFile.fromFile(filename));
+		}
+
+		List<JSSourceFile> primaryJavascriptFiles = new ArrayList<JSSourceFile>();
+		for (String filename : this.primaries) {
+			primaryJavascriptFiles.add(JSSourceFile.fromFile(filename));
+		}
+
+		compiler.compile(externalJavascriptFiles, primaryJavascriptFiles,
+				options);
+
+		this.warnings = compiler.getWarnings();
+		this.errors = compiler.getErrors();
+
+		this.write(compiler, this.output);
+	}
+
+	private void write(com.google.javascript.jscomp.Compiler compiler, String path) throws IOException {
+
+		File f = new File(path);
+		File parent = f.getParentFile();
+
+		if (null != parent) {
+			parent.mkdirs();
+		}
+		int pos = wrapper.indexOf(oHolder);
+		String prefix = "", suffix = "";
+		if (pos != -1) {
+			prefix = pos > 0 ? wrapper.substring(0, pos) : prefix;
+			pos = pos + oHolder.length();
+			suffix = pos < wrapper.length() ? wrapper.substring(pos) : suffix;
+		}
+
+		FileWriter outputFile;
+		outputFile = new FileWriter(path);
+		outputFile.write(prefix);
+		outputFile.write(compiler.toSource());
+		outputFile.write(suffix);
+		outputFile.write("\n");
+		outputFile.write(this.compileNotes);
+		outputFile.close();
+	}
 }
