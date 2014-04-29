@@ -7,17 +7,17 @@
 <!-- the Compile on Save feature is turned off for the project. -->
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
-<project name="kjscompile" default="default" basedir=".">
-    <description>Builds, tests, and runs the project kjscompile.</description>
+<project name="kjscompiles" default="default" basedir=".">
+    <description>Builds, tests, and runs the project kjscompiles.</description>
     <import file="nbproject/build-impl.xml"/>
 
   <target name="-post-jar">
-    <jar jarfile="kjscompile.jar">
+    <jar jarfile="kjscompiler.jar">
       <zipfileset src="${dist.jar}" excludes="META-INF/*" />
       <zipfileset src="lib/json-simple-1.1.1.jar" excludes="META-INF/*" />
 	  <zipfileset src="lib/compiler.jar" excludes="META-INF/*" />
       <manifest>
-          <attribute name="Main-Class" value="kjscompile.Program"/>
+          <attribute name="Main-Class" value="kjscompiler.Program"/>
       </manifest>
     </jar>
   </target>

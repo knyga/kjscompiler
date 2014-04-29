@@ -15,9 +15,9 @@ With respect to internal and external dependencies.
 Requires Java Runtime Environment version 7.
 
 ###How to run
-`java -jar kjscompile.jar`
+`java -jar kjscompiler.jar`
 
-###Kjscompile.json
+###Kjscompiler.json
 Instead of kjscompile.json you can specify your own path to configuration file with `--settings %path%` attribute.
 
 `basedir` - directory or array of directories with JavaScript files;
