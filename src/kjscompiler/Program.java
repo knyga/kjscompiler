@@ -166,7 +166,7 @@ public class Program {
 		if (errors.length == 0) {
 			JSError[] warnings = compiler.getWarnings();
 			for (int i = 0, length = warnings.length; i < length; i++) {
-				JSError warn = errors[i];
+				JSError warn = warnings[i];
 				System.out.println("Warning #" + (i + 1) + ": "
 						+ warn.description + " in " + warn.sourceName + " ("
 						+ warn.lineNumber + ")");
