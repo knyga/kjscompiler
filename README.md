@@ -1,4 +1,4 @@
-##Kjscompiler
+## Kjscompiler
 Makes compilation of multiple JavaScript files with *Google Closure Compiler* application in right order.
 
 Goal is to convert layout at input:
@@ -11,13 +11,13 @@ In to minifed layout:
 
 With respect to internal and external dependencies.
 
-###Requirements
+### Requirements
 Requires Java Runtime Environment version 7.
 
-###How to run
+### How to run
 `java -jar kjscompiler.jar`
 
-###Kjscompiler.json
+### Kjscompiler.json
 Instead of kjscompile.json you can specify your own path to configuration file with `--settings %path%` attribute.
 
 `basedir` - directory or array of directories with JavaScript files;
@@ -54,7 +54,7 @@ Note:
 Any path will be relative to the settings file. If none provided it will be relative to the current working directory ( the directory where you launched kjscompiler ).
 
 
-###Annotating JavaScript files
+### Annotating JavaScript files
 Kjscompiler can use information about JavaScript file to build right compiling chain.
 
 | Tag        | Example           | Description  |
@@ -85,10 +85,10 @@ Kjscompiler can use information about JavaScript file to build right compiling c
  */
 ```
 
-###Debug
+### Debug
 To debug add `--debug true` in call line.
 
-###Licence
+### Licence
 kjscompiler
 
 Copyright (C) 2014  Oleksandr Knyga, oleksandrknyga@gmail.com
